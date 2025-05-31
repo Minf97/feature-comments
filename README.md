@@ -87,11 +87,23 @@ npm run analyze      # Analyze bundle size
 
 ## 🚀 Deployment
 
-This project includes automated CI/CD pipeline for deployment to Vercel:
+This project includes automated CI/CD pipeline using Vercel Deploy Hooks:
 
-- **Automatic Deployment**: Push to `main` branch triggers production deployment
-- **Quality Checks**: ESLint and TypeScript validation on every push
+- **Code Quality Checks**: ESLint and TypeScript validation on every push
+- **Automatic Deployment**: Deploy Hooks trigger production deployment when code quality passes
 - **Preview Deployments**: Pull requests generate preview environments
+
+### Quick Setup
+
+1. **Create Vercel Project**: Import your GitHub repository to Vercel
+2. **Create Deploy Hook**: 
+   - Go to Project Settings → Git → Deploy Hooks
+   - Create a hook for `main` branch
+3. **Add GitHub Secret**: 
+   - Repository Settings → Secrets → Actions
+   - Add `VERCEL_DEPLOY_HOOK_URL` with the generated URL
+
+For detailed deployment setup, see [SETUP-GUIDE.md](./SETUP-GUIDE.md).
 
 ## 📂 Project Structure
 
