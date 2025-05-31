@@ -244,27 +244,21 @@ export function EnhancedCommentCard({
     const { replyMap } = buildReplyTree(replies)
     const childReplies = replyMap[reply.id] || []
     
-    // 移动端优化的缩进距离
+    // 移动端优化的缩进距离 - 优化版本
     const getMarginClass = (depth: number) => {
-      if (isMobile) {
-        // 移动端使用更小的缩进距离
-        switch(depth) {
-          case 0: return 'ml-0'
-          case 1: return 'ml-3'
-          case 2: return 'ml-6'
-          case 3: return 'ml-9'
-          default: return 'ml-12'
-        }
-      } else {
-        // 桌面端保持原有缩进
-        switch(depth) {
-          case 0: return 'ml-0'
-          case 1: return 'ml-6'
-          case 2: return 'ml-12'
-          case 3: return 'ml-18'
-          default: return 'ml-24'
-        }
+      // 缩进配置：[移动端, 桌面端]
+      const marginConfigs = {
+        0: ['ml-0', 'ml-0'],
+        1: ['ml-3', 'ml-6'],
+        2: ['ml-6', 'ml-12'],
+        3: ['ml-9', 'ml-18'],
+        default: ['ml-12', 'ml-24']
       }
+      
+      const configKey = depth <= 3 ? depth : 'default'
+      const [mobileClass, desktopClass] = marginConfigs[configKey as keyof typeof marginConfigs]
+      
+      return isMobile ? mobileClass : desktopClass
     }
 
     const replyLike = replyLikes[reply.id] || { liked: false, count: reply.likes }
@@ -362,9 +356,14 @@ export function EnhancedCommentCard({
   }
 
   const getRatingColor = (rating: number) => {
-    if (rating >= 4) return 'text-green-600'
-    if (rating >= 3) return 'text-yellow-600'
-    return 'text-red-600'
+    // 评分颜色配置：[最小评分, 颜色类]
+    const ratingColors: [number, string][] = [
+      [4, 'text-green-600'],   // 4-5分：绿色（优秀）
+      [3, 'text-yellow-600'],  // 3分：黄色（一般）
+      [0, 'text-red-600']      // 1-2分：红色（差评）
+    ]
+    
+    return ratingColors.find(([minRating]) => rating >= minRating)?.[1] || 'text-gray-600'
   }
 
   const handleImageClick = (index: number) => {
@@ -463,31 +462,24 @@ export function EnhancedCommentCard({
                   const imageCount = comment.images.length
                   const displayImages = showAllImages ? comment.images : comment.images.slice(0, 9)
                   
-                  // 根据图片数量确定网格布局
+                  // 根据图片数量确定网格布局的优化版本
                   const getGridConfig = (count: number) => {
-                    if (count === 1) return { 
-                      cols: 'grid-cols-1', 
-                      containerClass: 'max-w-xs mx-auto' 
+                    // 网格配置映射表
+                    const gridConfigs = {
+                      1: { cols: 'grid-cols-1', maxWidth: 'max-w-xs mx-auto' },
+                      2: { cols: 'grid-cols-2', maxWidth: 'max-w-md' },
+                      3: { cols: 'grid-cols-3', maxWidth: 'max-w-lg' },
+                      4: { cols: 'grid-cols-2', maxWidth: 'max-w-md' },
+                      default: { cols: 'grid-cols-3', maxWidth: 'max-w-lg' }
                     }
-                    if (count === 2) return { 
-                      cols: 'grid-cols-2', 
-                      containerClass: isMobile ? 'w-full' : 'max-w-md' 
-                    }
-                    if (count === 3) return { 
-                      cols: 'grid-cols-3', 
-                      containerClass: isMobile ? 'w-full' : 'max-w-lg' 
-                    }
-                    if (count === 4) return { 
-                      cols: 'grid-cols-2', 
-                      containerClass: isMobile ? 'w-full' : 'max-w-md' 
-                    }
-                    if (count <= 6) return { 
-                      cols: 'grid-cols-3', 
-                      containerClass: isMobile ? 'w-full' : 'max-w-lg' 
-                    }
-                    return { 
-                      cols: 'grid-cols-3', 
-                      containerClass: isMobile ? 'w-full' : 'max-w-lg' 
+                    
+                    // 根据图片数量选择配置
+                    const configKey = count <= 4 ? count : (count <= 6 ? 3 : 'default')
+                    const config = gridConfigs[configKey as keyof typeof gridConfigs] || gridConfigs.default
+                    
+                    return {
+                      cols: config.cols,
+                      containerClass: isMobile ? 'w-full' : config.maxWidth
                     }
                   }
                   

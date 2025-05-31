@@ -54,6 +54,26 @@ export function InteractiveComments() {
       console.error('Comments is not an array:', comments)
       return
     }
+
+    // 筛选函数配置
+  const filterFunctions = {
+    all: () => true,
+    featured: (c: Comment) => c.featured,
+    verified: (c: Comment) => c.verified_purchase,
+    high_rating: (c: Comment) => c.rating >= 4
+  } as const
+
+  // 排序函数配置
+  const sortFunctions = {
+    helpful: (a: Comment, b: Comment) => b.helpful_count - a.helpful_count,
+    recent: (a: Comment, b: Comment) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+    rating: (a: Comment, b: Comment) => b.rating - a.rating,
+    featured: (a: Comment, b: Comment) => {
+      if (a.featured && !b.featured) return -1
+      if (!a.featured && b.featured) return 1
+      return b.helpful_count - a.helpful_count
+    }
+  } as const
     
     setSearchQuery(query)
     
@@ -67,37 +87,16 @@ export function InteractiveComments() {
       )
     }
     
-    // 应用筛选
-    switch (filterBy) {
-      case "featured":
-        filtered = filtered.filter(c => c.featured)
-        break
-      case "verified":
-        filtered = filtered.filter(c => c.verified_purchase)
-        break
-      case "high_rating":
-        filtered = filtered.filter(c => c.rating >= 4)
-        break
+    // 应用筛选 - 优化版本
+    const filterFunction = filterFunctions[filterBy]
+    if (filterFunction) {
+      filtered = filtered.filter(filterFunction)
     }
     
-    // 应用排序
-    switch (sortBy) {
-      case "helpful":
-        filtered.sort((a, b) => b.helpful_count - a.helpful_count)
-        break
-      case "recent":
-        filtered.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
-        break
-      case "rating":
-        filtered.sort((a, b) => b.rating - a.rating)
-        break
-      case "featured":
-        filtered.sort((a, b) => {
-          if (a.featured && !b.featured) return -1
-          if (!a.featured && b.featured) return 1
-          return b.helpful_count - a.helpful_count
-        })
-        break
+    // 应用排序 - 优化版本
+    const sortFunction = sortFunctions[sortBy]
+    if (sortFunction) {
+      filtered.sort(sortFunction)
     }
     
     setFilteredComments(filtered)
@@ -141,34 +140,32 @@ export function InteractiveComments() {
     handleSearch(searchQuery)
   }, [handleSearch, searchQuery])
 
+  // 排序配置：合并图标和标签配置
+  const sortConfigs = {
+    helpful: { icon: TrendingUp, label: "Most Helpful" },
+    recent: { icon: Clock, label: "Recent" },
+    rating: { icon: Star, label: "Rating" },
+    featured: { icon: Award, label: "Featured" }
+  } as const
+
+  // 筛选配置
+  const filterConfigs = {
+    all: "All",
+    featured: "Featured", 
+    verified: "Verified",
+    high_rating: "High Rating"
+  } as const
+
   const getSortIcon = (sort: SortType) => {
-    switch (sort) {
-      case "helpful": return TrendingUp
-      case "recent": return Clock
-      case "rating": return Star
-      case "featured": return Award
-      default: return TrendingUp
-    }
+    return sortConfigs[sort]?.icon || TrendingUp
   }
 
   const getSortLabel = (sort: SortType) => {
-    switch (sort) {
-      case "helpful": return "Most Helpful"
-      case "recent": return "Recent"
-      case "rating": return "Rating"
-      case "featured": return "Featured"
-      default: return "Most Helpful"
-    }
+    return sortConfigs[sort]?.label || "Most Helpful"
   }
 
   const getFilterLabel = (filter: FilterType) => {
-    switch (filter) {
-      case "all": return "All"
-      case "featured": return "Featured"
-      case "verified": return "Verified"
-      case "high_rating": return "High Rating"
-      default: return "All"
-    }
+    return filterConfigs[filter] || "All"
   }
 
   const averageRating = React.useMemo(() => {
