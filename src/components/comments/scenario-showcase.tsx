@@ -290,34 +290,42 @@ export function ScenarioShowcase() {
       </div>
 
       <Tabs defaultValue="multi-features" className="w-full">
-        <TabsList className="grid w-full grid-cols-4 mb-8">
+        <TabsList className={`grid w-full ${isMobile ? 'grid-cols-2 grid-rows-2 h-auto gap-1' : 'grid-cols-4'} ${isMobile ? 'mb-4' : 'mb-8'}`}>
           <TabsTrigger
             value="multi-features"
-            className="flex items-center space-x-2"
+            className={`flex items-center ${isMobile ? 'flex-col space-y-1 p-2 h-auto' : 'space-x-2'}`}
           >
-            <Settings className="h-4 w-4" />
-            <span>Multi-Features</span>
+            <Settings className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'}`} />
+            <span className={`${isMobile ? 'text-xs' : ''}`}>
+              {isMobile ? 'Multi' : 'Multi-Features'}
+            </span>
           </TabsTrigger>
           <TabsTrigger
             value="reply-system"
-            className="flex items-center space-x-2"
+            className={`flex items-center ${isMobile ? 'flex-col space-y-1 p-2 h-auto' : 'space-x-2'}`}
           >
-            <MessageSquareMore className="h-4 w-4" />
-            <span>Reply System</span>
+            <MessageSquareMore className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'}`} />
+            <span className={`${isMobile ? 'text-xs' : ''}`}>
+              {isMobile ? 'Reply' : 'Reply System'}
+            </span>
           </TabsTrigger>
           <TabsTrigger
             value="image-comments"
-            className="flex items-center space-x-2"
+            className={`flex items-center ${isMobile ? 'flex-col space-y-1 p-2 h-auto' : 'space-x-2'}`}
           >
-            <ImageIcon className="h-4 w-4" />
-            <span>Image Comments</span>
+            <ImageIcon className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'}`} />
+            <span className={`${isMobile ? 'text-xs' : ''}`}>
+              {isMobile ? 'Images' : 'Image Comments'}
+            </span>
           </TabsTrigger>
           <TabsTrigger
             value="product-cards"
-            className="flex items-center space-x-2"
+            className={`flex items-center ${isMobile ? 'flex-col space-y-1 p-2 h-auto' : 'space-x-2'}`}
           >
-            <ShoppingBag className="h-4 w-4" />
-            <span>Product Cards</span>
+            <ShoppingBag className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'}`} />
+            <span className={`${isMobile ? 'text-xs' : ''}`}>
+              {isMobile ? 'Products' : 'Product Cards'}
+            </span>
           </TabsTrigger>
         </TabsList>
 

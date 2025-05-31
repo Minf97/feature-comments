@@ -559,13 +559,13 @@ export function EnhancedCommentCard({
           <Separator className="my-4" />
           
           {/* 底部操作区域 */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between select-none">
             <div className={`flex items-center ${isMobile ? 'space-x-2' : 'space-x-4'}`}>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={handleHelpful}
-                className={`h-8 transition-all ${isMobile ? 'text-xs' : 'text-sm'} ${
+                className={`h-8 transition-all ${isMobile ? 'text-xs hidden' : 'text-sm'} ${
                   isHelpful 
                     ? 'text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-800' 
                     : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
