@@ -98,7 +98,6 @@ export function ReplyEditor({
                   className="h-8 text-xs flex-1 text-muted-foreground hover:text-foreground"
                 >
                   <X className="h-3 w-3 mr-1" />
-                  Cancel
                 </Button>
                 
                 <Button
@@ -108,7 +107,6 @@ export function ReplyEditor({
                   className="h-8 text-xs flex-1 bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-700 dark:hover:bg-blue-800"
                 >
                   <Send className="h-3 w-3 mr-1" />
-                  {isSubmitting ? "Sending..." : "Send"}
                 </Button>
               </div>
               <div className="text-xs text-muted-foreground text-center">

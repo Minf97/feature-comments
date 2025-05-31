@@ -126,14 +126,15 @@ export function EnhancedCommentCard({
 
   const handleReplySubmit = (content: string) => {
     const newReply: Reply = {
-      id: replies.length + 1,
+      id: Date.now(),
       author: "Current User",
       content,
       timestamp: new Date().toISOString(),
       likes: 0
     }
     
-    setReplies(prev => [...prev, newReply])
+    // 将新回复插入到数组开头，而不是末尾
+    setReplies(prev => [newReply, ...prev])
     setReplyLikes(prev => ({
       ...prev,
       [newReply.id]: { liked: false, count: 0 }
@@ -179,7 +180,7 @@ export function EnhancedCommentCard({
 
   const handleNestedReplySubmit = (content: string, parentId: number) => {
     const newReply: Reply = {
-      id: replies.length + 1000, // Use large number to avoid conflicts
+      id: Date.now() + Math.random(),
       author: "Current User",
       content,
       timestamp: new Date().toISOString(),
@@ -187,7 +188,8 @@ export function EnhancedCommentCard({
       parentId: parentId
     }
     
-    setReplies(prev => [...prev, newReply])
+    // 将新回复插入到数组开头，而不是末尾
+    setReplies(prev => [newReply, ...prev])
     setReplyLikes(prev => ({
       ...prev,
       [newReply.id]: { liked: false, count: 0 }
@@ -212,7 +214,12 @@ export function EnhancedCommentCard({
     const replyMap: {[key: number]: Reply[]} = {}
     const topLevelReplies: Reply[] = []
     
-    replies.forEach(reply => {
+    // 首先按时间降序排序所有回复
+    const sortedReplies = [...replies]?.sort((a, b) => 
+      new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    )
+    
+    sortedReplies.forEach(reply => {
       if (reply.parentId) {
         if (!replyMap[reply.parentId]) {
           replyMap[reply.parentId] = []
@@ -221,6 +228,13 @@ export function EnhancedCommentCard({
       } else {
         topLevelReplies.push(reply)
       }
+    })
+    
+    // 确保每个父级回复的子回复也按时间降序排列
+    Object.keys(replyMap).forEach(parentId => {
+      replyMap[parseInt(parentId)] = replyMap[parseInt(parentId)]?.sort((a, b) => 
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+      )
     })
     
     return { topLevelReplies, replyMap }

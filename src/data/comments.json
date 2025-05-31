@@ -10,7 +10,7 @@
       "rating": 4,
       "helpful_count": 30,
       "verified_purchase": true,
-      "featured": false,
+      "featured": true,
       "likes": 3,
       "has_follow_up": true,
       "follow_up": {
