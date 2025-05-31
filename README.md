@@ -1,36 +1,126 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💬 Feature Comments
 
-## Getting Started
+A modern, feature-rich comment display system built with Next.js, featuring e-commerce platform design style with comprehensive functionality and multi-scenario applications.
 
-First, run the development server:
+## ✨ Features
 
+- 🎨 **Modern UI Design** - Clean and intuitive interface with shadcn/ui components
+- 🌓 **Dark/Light Mode** - Seamless theme switching with next-themes
+- 📱 **Responsive Design** - Perfect adaptation for mobile and desktop devices
+- ⭐ **Rating System** - 5-star rating display and interaction
+- 🖼️ **Image Support** - Multi-image upload with lightbox preview
+- 💬 **Hierarchical Replies** - Nested comment system with threading
+- 🏷️ **Smart Badges** - Featured comments and verified purchase indicators
+- 👍 **Interactive Actions** - Like, helpful, reply, and share functionality
+- 🔍 **Search & Filter** - Real-time search and intelligent filtering
+- 📊 **Sort Options** - Multiple sorting methods (helpful, recent, rating)
+- 🚩 **Report System** - Content moderation and reporting features
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org/) with App Router
+- **Language**: [TypeScript](https://www.typescriptlang.org/) for type safety
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) for utility-first CSS
+- **Components**: [shadcn/ui](https://ui.shadcn.com/) for modern React components
+- **Icons**: [Lucide React](https://lucide.dev/) for consistent SVG icons
+- **Themes**: [next-themes](https://github.com/pacocoursey/next-themes) for dark/light mode
+- **Notifications**: [Sonner](https://sonner.emilkowal.ski/) for toast messages
+- **Image Gallery**: [yet-another-react-lightbox](https://yet-another-react-lightbox.com/) for image preview
+- **Development**: [code-inspector-plugin](https://github.com/zh-lx/code-inspector) for debugging support
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 20+ 
+- npm, yarn, or pnpm
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/your-username/feature-comments.git
+cd feature-comments
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+3. Run the development server:
 ```bash
 npm run dev
 # or
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📱 Demo Scenarios
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The project showcases four main scenarios:
 
-## Learn More
+1. **Multi-Features** - Comprehensive comment functionality display
+2. **Reply System** - Hierarchical conversation threading  
+3. **Image Comments** - Visual feedback with image galleries
+4. **Product Cards** - E-commerce integration examples
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ Available Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
+npm run lint:fix     # Fix ESLint issues automatically
+npm run type-check   # Run TypeScript type checking
+npm run clean        # Clean build cache
+npm run analyze      # Analyze bundle size
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🚀 Deployment
 
-## Deploy on Vercel
+This project includes automated CI/CD pipeline for deployment to Vercel:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Automatic Deployment**: Push to `main` branch triggers production deployment
+- **Quality Checks**: ESLint and TypeScript validation on every push
+- **Preview Deployments**: Pull requests generate preview environments
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📂 Project Structure
+
+```
+src/
+├── app/                    # Next.js app directory
+├── components/             # React components
+│   ├── comments/          # Comment-related components
+│   ├── product/           # Product card components
+│   └── ui/                # shadcn/ui components
+├── contexts/              # React contexts
+├── data/                  # Mock data and JSON files
+└── lib/                   # Utility functions
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read our contributing guidelines and submit pull requests for any improvements.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🔗 Links
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [shadcn/ui Documentation](https://ui.shadcn.com/)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+
+---
+
+Built with ❤️ using Next.js and modern web technologies.
